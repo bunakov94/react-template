@@ -5,4 +5,5 @@
 3. husky install
 4. npm run start
 5. Add file watcher (web storm)
+6. 
 ![https://anxtedfo.sirv.com/Images/fileWatcherjpg.jpg](https://anxtedfo.sirv.com/Images/fileWatcherjpg.jpg)
