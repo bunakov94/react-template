@@ -46,6 +46,8 @@
     "JSX": true
   },
   "rules": {
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
     "react/function-component-definition": "off",
     "implicit-arrow-linebreak": "off",
     "react/jsx-curly-newline": "off",
