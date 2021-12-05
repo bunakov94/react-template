@@ -1,24 +1,33 @@
-import axios from 'axios'
-import { all, call, put, takeLatest } from 'redux-saga/effects'
-import { IPost } from '../../../models/IPost'
-import { fetchPostsFailure, fetchPostsSuccess } from '../../actions/postActions/postActions'
-import { postTypes } from '../../ActionTypes/postTypes'
+import {
+  call,
+  CallEffect,
+  fork,
+  ForkEffect,
+  put,
+  PutEffect,
+  SagaReturnType,
+  take,
+  TakeEffect,
+} from 'redux-saga/effects'
 
-const getPosts = () => axios.get<IPost[]>('https://jsonplaceholder.typicode.com/todos')
+import { LOCATION_CHANGE, LocationChangeAction } from 'connected-react-router'
+import { fetchPostsFailure, fetchPostsRequest, fetchPostsSuccess } from 'redux/actions/postActions/postActions'
+import { PostsActions } from 'redux/types/types'
+import { Http, ResponseDto } from 'utils/http'
+import { IPost } from 'models/IPost'
 
-export interface Response {
-  data: IPost[]
-}
+const getPosts = () => Http.get<IPost[]>('/todos')
 
-function* fetchPostsSaga(): Generator<unknown, void, Response> {
+function* postsWorker(): PostsWorker {
+  yield put(fetchPostsRequest())
   try {
-    const response = yield call(getPosts)
+    const { data: posts }: ResponseDto<IPost[]> = yield call(getPosts)
     yield put(
       fetchPostsSuccess({
-        posts: response.data,
+        posts,
       })
     )
-  } catch (e: unknown) {
+  } catch (e) {
     if (e instanceof Error) {
       yield put(
         fetchPostsFailure({
@@ -29,8 +38,15 @@ function* fetchPostsSaga(): Generator<unknown, void, Response> {
   }
 }
 
-function* postsSaga() {
-  yield all([takeLatest(postTypes.FETCH_POST_REQUEST, fetchPostsSaga)])
+export function* postsWatcher(): PostsWatcher {
+  while (true) {
+    const action: LocationChangeAction = yield take(LOCATION_CHANGE)
+    if (action.payload.location.pathname.endsWith('/')) {
+      yield fork(postsWorker)
+    }
+  }
 }
 
-export default postsSaga
+type PostsWorker = Generator<PutEffect<PostsActions> | CallEffect<ResponseDto<IPost[]>>, void, ResponseDto<IPost[]>>
+
+type PostsWatcher = Generator<ForkEffect<SagaReturnType<() => PostsWorker>> | TakeEffect, void, LocationChangeAction>

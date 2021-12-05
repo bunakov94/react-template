@@ -4,8 +4,8 @@ import {
   FetchPostsRequest,
   FetchPostsSuccess,
   FetchPostsSuccessPayload,
-} from '../../types/types'
-import { postTypes } from '../../ActionTypes/postTypes'
+} from 'redux/types/types'
+import { postTypes } from 'redux/ActionTypes/postTypes'
 
 export const fetchPostsRequest = (): FetchPostsRequest => ({
   type: postTypes.FETCH_POST_REQUEST,

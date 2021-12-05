@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchPostsRequest } from './redux/actions/postActions/postActions'
-import { PostsState } from './redux/types/types'
-import { RootState } from './redux/store'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { PostsState } from 'redux/types/types'
+import { RootState } from 'redux/store'
 
-const App = () => {
-  const dispatch = useDispatch()
+export const App = (): JSX.Element => {
   const { pending, posts, error } = useSelector<RootState, PostsState>(state => state.posts)
-
-  useEffect(() => {
-    dispatch(fetchPostsRequest())
-  }, [dispatch])
 
   if (pending) {
     return <div>Loading...</div>
@@ -21,12 +15,13 @@ const App = () => {
   }
 
   return (
-    <div>
-      {posts?.map((todo, index) => (
-        <div key={todo.id}>{`${index + 1} ${todo.title}`}</div>
-      ))}
-    </div>
+    <>
+      <h1>Posts</h1>
+      <ul>
+        {posts?.map((todo, index) => (
+          <li key={todo.id}>{`${index + 1} ${todo.title}`}</li>
+        ))}
+      </ul>
+    </>
   )
 }
-
-export default App

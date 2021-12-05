@@ -1,5 +1,5 @@
-import { IPost } from '../../models/IPost'
-import { postTypes } from '../ActionTypes/postTypes'
+import { IPost } from 'models/IPost'
+import { postTypes } from 'redux/ActionTypes/postTypes'
 
 export interface PostsState {
   pending: boolean
@@ -7,13 +7,9 @@ export interface PostsState {
   error: string | null
 }
 
-export interface FetchPostsSuccessPayload {
-  posts: IPost[]
-}
+export type FetchPostsSuccessPayload = Pick<PostsState, 'posts'>
 
-export interface FetchPostsFailurePayload {
-  error: string
-}
+export type FetchPostsFailurePayload = Pick<PostsState, 'error'>
 
 export interface FetchPostsRequest {
   type: typeof postTypes.FETCH_POST_REQUEST

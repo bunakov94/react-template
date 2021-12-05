@@ -1,15 +1,15 @@
-import { PostsActions, PostsState } from '../../types/types'
-import { postTypes } from '../../ActionTypes/postTypes'
+import { PostsActions, PostsState } from 'redux/types/types'
+import { postTypes } from 'redux/ActionTypes/postTypes'
 
-const initialState: PostsState = {
+export const initialState: PostsState = {
   pending: false,
   posts: [],
   error: null,
 }
 
 // eslint-disable-next-line default-param-last
-export default (state = initialState, action: PostsActions) => {
-  switch (action?.type) {
+export const postsReducer = (state = initialState, action: PostsActions): PostsState => {
+  switch (action.type) {
     case postTypes.FETCH_POST_REQUEST:
       return {
         ...state,

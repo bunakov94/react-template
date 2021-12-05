@@ -1,8 +1,11 @@
+import { createBrowserHistory } from 'history'
+import { connectRouter } from 'connected-react-router'
 import { combineReducers } from 'redux'
-import postReducer from './postsReducer/postsReducer'
+import { postsReducer } from 'redux/reducers/postsReducer/postsReducer'
 
-const rootReducer = combineReducers({
-  posts: postReducer,
+export const history = createBrowserHistory()
+
+export const rootReducer = combineReducers({
+  router: connectRouter(history),
+  posts: postsReducer,
 })
-
-export default rootReducer

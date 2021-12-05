@@ -25,14 +25,7 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      }
+      "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
     }
   },
   "globals": {
@@ -80,29 +73,11 @@
       "never"
     ],
     "no-tabs": "warn",
-    "indent": [
-      "error",
-      2,
-      {
-        "VariableDeclarator": 2,
-        "SwitchCase": 1,
-        "MemberExpression": 1,
-        "FunctionDeclaration": {
-          "body": 1,
-          "parameters": "first"
-        },
-        "CallExpression": {
-          "arguments": "first"
-        },
-        "ArrayExpression": "first",
-        "ObjectExpression": "first",
-        "ImportDeclaration": "first"
-      }
-    ],
+    "indent": "off",
     "max-len": [
       "error",
       {
-        "code": 110,
+        "code": 120,
         "ignoreStrings": true,
         "ignoreTemplateLiterals": true,
         "ignoreComments": true, // allow longer comments
@@ -182,7 +157,6 @@
     "@typescript-eslint/consistent-type-definitions": "warn",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-explicit-any": "error",
     // jest rules -> https://github.com/jest-community/eslint-plugin-jest
     "jest/no-disabled-tests": "warn",
     "jest/no-focused-tests": "error",
@@ -226,7 +200,7 @@
       }
     ],
     "react/prop-types": "off", // would be nice but to many props are missing currently
-    "react/require-default-props": "warn", // TODO: Set to error
+    "react/require-default-props": "error", // TODO: Set to error
     "react/destructuring-assignment": "warn",
     "react/jsx-props-no-spreading": "off",
     "react-hooks/rules-of-hooks": "error",
